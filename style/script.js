@@ -54,7 +54,24 @@ let shift = [];
 let targetPositions = [];
 let colors = [];
 let particleData = [];
+function createLove() {
+  const love = document.createElement("div");
+  love.classList.add("love");
+  love.innerText = "I LOVE YOU";
 
+  love.style.left = Math.random() * window.innerWidth + "px";
+  love.style.animationDuration = (Math.random() * 2 + 2) + "s";
+
+  document.getElementById("love-rain").appendChild(love);
+
+  setTimeout(() => {
+    love.remove();
+  }, 4000);
+}
+
+setInterval(createLove, 200);
+
+document.getElementById("love-rain").style.display = "none";
 function initGalaxy() {
     for (let i = 0; i < PARTICLE_COUNT; i++) {
         let p;
@@ -679,4 +696,5 @@ renderer.setAnimationLoop(() => {
 
     renderer.render(scene, camera);
 });
+
 
