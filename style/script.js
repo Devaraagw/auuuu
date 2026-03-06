@@ -1,40 +1,113 @@
-import * as THREE from "https://esm.sh/three@0.136.0";
-import { OrbitControls } from "https://esm.sh/three@0.136.0/examples/jsm/controls/OrbitControls.js";
+// ============================
+// LOVE TEXT RAIN
+// ============================
 
-const isMobile = window.innerWidth < 768;
-const PARTICLE_COUNT = isMobile ? 30000 : 100000;
-const CENTER_COUNT = Math.floor(PARTICLE_COUNT * 0.5);
-const MODE = {
-    GALAXY: 0,
-    FIST: 1,
-    IMAGES: 2
-};
+const container = document.getElementById("love-container")
 
-let currentMode = MODE.GALAXY;
-let lerpFactor = 0;
-let targetLerp = 0;
-let targetRotationY = 0;
-let currentRotationY = 0;
-let autoRotationAngle = 0;
+function createLove(){
 
-const imagePaths = [];
-for (let i = 1; i <= 11; i++) {
-    imagePaths.push(`style/img/au (${i}).jpg`);
+const el = document.createElement("div")
+
+el.innerText="I LOVE YOU"
+el.className="love"
+
+el.style.left=Math.random()*100+"vw"
+
+const duration=Math.random()*3+2
+
+el.style.animationDuration=duration+"s"
+
+container.appendChild(el)
+
+setTimeout(()=>{
+
+el.remove()
+
+},duration*1000)
+
 }
 
+setInterval(createLove,100)
 
-let scene = new THREE.Scene();
-scene.background = new THREE.Color('#160016');
-let camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
-camera.position.set(0, 3, isMobile ? 40 : 30);
 
-let renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(window.devicePixelRatio);
-document.body.appendChild(renderer.domElement);
+// ============================
+// COUNTDOWN
+// ============================
 
-window.addEventListener("resize", () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
+let count=3
+const countdown=document.getElementById("countdown")
+
+const timer=setInterval(()=>{
+
+count--
+
+if(count>0){
+
+countdown.innerText=count
+
+}else{
+
+countdown.innerText=""
+
+clearInterval(timer)
+
+startGalaxy()
+
+}
+
+},1000)
+
+
+// ============================
+// GALAXY
+// ============================
+
+function startGalaxy(){
+
+document.getElementById("intro").style.display="none"
+
+const canvas=document.getElementById("galaxy")
+const ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let stars=[]
+
+for(let i=0;i<500;i++){
+
+stars.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*2
+
+})
+
+}
+
+function draw(){
+
+ctx.fillStyle="black"
+ctx.fillRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="white"
+
+stars.forEach(s=>{
+
+ctx.beginPath()
+ctx.arc(s.x,s.y,s.size,0,Math.PI*2)
+ctx.fill()
+
+})
+
+requestAnimationFrame(draw)
+
+}
+
+draw()
+
+}    camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
     if (gu && gu.uTargetSize) {
@@ -696,5 +769,6 @@ renderer.setAnimationLoop(() => {
 
     renderer.render(scene, camera);
 });
+
 
 
