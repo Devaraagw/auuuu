@@ -18,8 +18,8 @@ let currentRotationY = 0;
 let autoRotationAngle = 0;
 
 const imagePaths = [];
-for (let i = 1; i <= 29; i++) {
-    imagePaths.push(`style/img/Anh (${i}).jpg`);
+for (let i = 1; i <= 11; i++) {
+    imagePaths.push(`style/img/au (${i}).jpg`);
 }
 
 
@@ -679,3 +679,4 @@ renderer.setAnimationLoop(() => {
 
     renderer.render(scene, camera);
 });
+
